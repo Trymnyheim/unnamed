@@ -1,0 +1,16 @@
+h2 {
+    text-align: center;
+}
+
+.task {
+    padding: 20px 0;
+}
+
+.title {
+    width: 15rem;
+    text-align: center
+}
+
+.description {
+    width: 100rem;
+}
