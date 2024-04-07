@@ -7,10 +7,10 @@ import Task from './components/Task';
 function App() {
   let component;
   switch (window.location.pathname) {
-    case "/trymhnyheim/home":
+    case "/unnamed/home":
       component = <Login />
       break
-    case "/trymhnyheim/task":
+    case "/unnamed/task":
         component = <Task />
         break
   }
