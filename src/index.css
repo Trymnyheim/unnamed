@@ -1,16 +1,34 @@
+.bold {
+    font-weight: bold;
+}
+
 h2 {
     text-align: center;
 }
 
+.no-break {
+    white-space: nowrap;
+}
+
+.login {
+    min-width: 400px;
+    padding: 20px;
+}
+
+@media (max-width: 900px) {
+    .login {
+        min-width: 0;
+    }
+}
+
 .task {
-    padding: 20px 0;
+    padding: 20px 50px;
 }
 
-.title {
-    width: 15rem;
-    text-align: center
+.taskList {
+    padding: 50px;
 }
 
-.description {
-    width: 100rem;
+.newTask {
+    padding: 0 100px;
 }

@@ -1,8 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './components/Menu';
-import Login from './components/Login';
-import Task from './components/Task';
+import TaskList from './components/TaskList';
 
 function App() {
   return (
@@ -10,8 +9,8 @@ function App() {
       <div>
         <Menu />
         <Routes>
-          <Route path="/unnamed/home" element={<Login />} />
-          <Route path="/unnamed/task" element={<Task />} />
+          <Route path="unnamed/home" />
+          <Route path="unnamed/task" element={<TaskList />} />
         </Routes>
       </div>
     </Router>

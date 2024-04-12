@@ -1,10 +1,20 @@
 import {Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import Login from "./Login"
 
 function Menu() {
   return (
-    <Navbar data-bs-theme="light" expand="lg" className="bg-success-subtle">
+    <Navbar fixed="top" data-bs-theme="light" expand="lg" className="bg-success-subtle">
       <Container>
-        <Navbar.Brand href="home">Trym H. Nyheim</Navbar.Brand>
+      <Navbar.Brand href="home">
+            <img
+              alt=""
+              src=""
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Trym H Nyheim
+          </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -20,6 +30,9 @@ function Menu() {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Login" id="basic-nav-dropdown">
+                <Login />
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
