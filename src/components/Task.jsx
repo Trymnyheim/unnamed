@@ -9,20 +9,6 @@ function Task(props) {
     const [tasks, setTasks] = useState([]);
     const [completionPercentage, setCompletionPercentage] = useState(0);
 
-    const toggleTaskCompletion = (id) => {
-        const updatedTasks = tasks.map((task, index) => 
-            index === id ? { ...task, comp: task.comp === "1" ? "0" : "1" } : task
-        );
-        setTasks(updatedTasks);
-    };
-
-    const calculateCompletionPercentage = () => {
-        if (tasks.length === 0) return 0;
-
-        const completedTasks = tasks.filter(task => task.comp === "1");
-        return Math.round((completedTasks.length / tasks.length) * 100);
-    };
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -41,10 +27,35 @@ function Task(props) {
         setFormData({ title: "", description: "", date: "" }); // Clear the form fields
     };
 
+    const updateTask = (id, updatedTask) => {
+        const updatedTasks = tasks.map((task, index) => 
+            index === id ? { ...updatedTask } : task
+        );
+        setTasks(updatedTasks);
+    };
+    
+
+    //Checks for updates and processes task completion
     useEffect(() => {
         const completionPercentage = calculateCompletionPercentage();
         setCompletionPercentage(completionPercentage);
     }, [tasks]);
+
+    //Toogles the completion of a task
+    const toggleTaskCompletion = (id) => {
+        const updatedTasks = tasks.map((task, index) => 
+            index === id ? { ...task, comp: task.comp === "1" ? "0" : "1" } : task
+        );
+        setTasks(updatedTasks);
+    };
+
+    //Calculates the percentage of completion for the progress bar
+    const calculateCompletionPercentage = () => {
+        if (tasks.length === 0) return 0;
+        const completedTasks = tasks.filter(task => task.comp === "1");
+        return Math.round((completedTasks.length / tasks.length) * 100);
+    };
+
 
     return (
         <div className="task">
@@ -56,13 +67,16 @@ function Task(props) {
                         <TaskItem 
                             key={index} 
                             id={index} 
-                            title={task.title} 
+                            title={task.content.title} 
                             desc={task.desc} 
                             date={task.date} 
                             comp={task.comp} 
                             toggleCompletion={toggleTaskCompletion}
+                            updateTask={updateTask}
                         />
                     ))}
+                    <TaskItem title={props.content[0].title} desc={props.content[0].desc} date={props.content[0].date} comp={props.content[0].comp} />
+                    <TaskItem title={props.content[1].title} desc={props.content[1].desc} date={props.content[1].date} comp={props.content[1].comp} />
                 </div>
                 <Form onSubmit={handleSubmit}>
                     <Stack direction="horizontal" gap={3}>

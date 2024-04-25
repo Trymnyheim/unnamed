@@ -1,28 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Stack from 'react-bootstrap/Stack';
 import { Form, FloatingLabel, Button } from 'react-bootstrap';
-import Task from './Task'; // Make sure to import Task component
+import Task from './Task.jsx';
 
 function TaskList() {
-    const [formData, setFormData] = useState({ taskName: "" });
-    const [taskLists, setTaskLists] = useState([]); // Initialize tasks state
+    const [taskLists, setTaskLists] = useState([]);
+    const [formData, setFormData] = useState({ taskName: '' });
 
-    const createTask = (event) => {
-        event.preventDefault();
-        
-        const newTaskList = {
-            taskName: formData.taskName
-        };
-        
-        setTaskLists([...taskLists, newTaskList]); // Update tasks state
-        setFormData({ taskName: "" }); // Reset form data
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    const fetchTasks = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/routes/api/dict');
+            if (!response.ok) {
+                throw new Error('Failed to fetch tasks');
+            }
+            const data = await response.json();
+            setTaskLists(data); // Assuming each task has a title and content property
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    };
+
+    const createTask = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:3000/routes/api/dict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create task list');
+            }
+
+            const data = await response.json();
+            setTaskLists([...taskLists, data]);
+            setFormData({ taskName: '' });
+        } catch (error) {
+            console.error('Error creating task list:', error);
+        }
     };
 
     return (
         <>
             <div className="taskList">
-                {taskLists.map((taskList, index) => (
-                    <Task key={index} title={taskList.taskName} />
+                {taskLists.map((task, index) => (
+                    <Task key={index} title={task.title} content={task.content} />
                 ))}
             </div>
             <Form className="newTask" onSubmit={createTask}>
@@ -46,4 +75,3 @@ function TaskList() {
 }
 
 export default TaskList;
-
